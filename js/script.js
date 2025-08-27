@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     async function getAIResponse(prompt) {
-    // This now points to the API route on your live website
+    // This points to the API route Vercel will create
     const liveApiUrl = '/api/generate'; 
 
     try {
