@@ -106,31 +106,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- Generic Gemini API Caller (Secure Version) ---
     async function getAIResponse(prompt) {
-        // This now points to your local backend server
-        const localApiUrl = 'http://localhost:3000/api/generate';
+    // This now points to the API route on your live website
+    const liveApiUrl = '/api/generate'; 
 
-        try {
-            const response = await fetch(localApiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt }) // Send the prompt to your backend
-            });
+    try {
+        const response = await fetch(liveApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: prompt })
+        });
 
-            if (!response.ok) {
-                throw new Error(`API call failed with status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-            
-            return text || "Sorry, I couldn't generate a response. Please try again.";
-        } catch (error) {
-            console.error("Error calling local backend:", error);
-            return "An error occurred while connecting to the AI service. Make sure the local server is running.";
+        if (!response.ok) {
+            throw new Error(`API call failed with status: ${response.status}`);
         }
+
+        const result = await response.json();
+        const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        return text || "Sorry, I couldn't generate a response. Please try again.";
+    } catch (error) {
+        console.error("Error calling live backend:", error);
+        return "An error occurred while connecting to the AI service.";
     }
+}
 });
 
 // Intersection Observer for fade-in animations
